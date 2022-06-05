@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
-from typing import List
-from Item import Item
-
+from .Item import Item
 
 @dataclass
 class Movie(Item):
+    time: str = "0"
     actors: str = ""
     type: str = "Movie"
 

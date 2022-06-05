@@ -1,5 +1,10 @@
-from flask import render_template
-from app.__init__ import app
+from flask import render_template, Flask
+
+from Database.mongo import MongoDB
+
+app = Flask(__name__)
+db = MongoDB(host="localhost", port=27017)
+db.connect_db()
 
 @app.route('/')
 def hello_world():  # put application's code here
@@ -11,7 +16,8 @@ def book_top():
 
 @app.route("/movie/top")
 def movie_top():
-    return render_template("movie_top.html")
+    movie = db.find_item()
+    return render_template("movie_top.html", movie= movie)
 
 @app.route("/add_item", methods=["GET", "POST"])
 def add_item():
