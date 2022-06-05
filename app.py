@@ -1,8 +1,12 @@
 from flask import render_template, Flask
-
 from Database.mongo import MongoDB
+from forms import AddItem
+import os
 
 app = Flask(__name__)
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+
 db = MongoDB(host="localhost", port=27017)
 db.connect_db()
 
@@ -21,7 +25,8 @@ def movie_top():
 
 @app.route("/add_item", methods=["GET", "POST"])
 def add_item():
-    return render_template("add_item.html")
+    form = AddItem()
+    return render_template("add_item.html", form=form)
 if __name__ == '__main__':
     app.run()
 

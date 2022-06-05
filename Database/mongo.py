@@ -1,7 +1,5 @@
 from typing import List
-
 from pymongo import MongoClient
-
 from Database.database import DataBase
 from Helpers.Movie import Movie
 
