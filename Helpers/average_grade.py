@@ -1,0 +1,1 @@
+# TODO  storzyć metodę liczącą średnią ocen
