@@ -1,13 +1,12 @@
-<form>
-     {{ form.csrf_token }}
+<form method="POST">
+    {{ form.csrf_token }}
     {{ form.title.label }}{{ form.title}}
     {{ form.autor.label }}{{ form.autor }}
+    {{ form.actors.label }}{{ form.actors }}
     {{ form.image.label }}{{ form.image }}
     {{ form.desc.label }}{{ form.desc }}
     {{ form.greade.label }}{{ form.greade}}
+    {{ form.type.label }}{{ form.type }}
+    {{ form.sumbit }}
+    <input type="reset" value="Wyczyść">
 </form>
-
-
-
-
-

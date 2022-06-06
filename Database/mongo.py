@@ -16,10 +16,10 @@ class MongoDB(DataBase):
 
     # dodaje nowy element
     def add_item(self, **kwargs):
-        # print(kwargs)
+        print(kwargs["data"])
         movie = self.db.movie
-        resultat = movie.insert_one(kwargs)
-        # print(resultat)
+        movie.insert_one(kwargs["data"])
+        # print(resultat.title)
 
     # szuka wszystkie elementy w bazie danych i zwraca lsitę tych obiektów
     def find_item(self) -> List[Movie]:
@@ -28,10 +28,10 @@ class MongoDB(DataBase):
         collections_items: List[Movie] = []
         for item in resultat:
             movie_item = Movie(
-                title=item["title"], actors=item['autor'], year=item["year"], image=item["image"],
-                description=item['desciption'], writers=item["writers"],
+                title=item["title"], actors=item['autor'], image=item["image"],
+                description=item['desciption'], writers=item["autor"],
                 average_grade=item['greade'], number_of_ratings=item['how_grade'],
-                time=item["time"],
+
                 type="Movie"
             )
             collections_items.append(movie_item)
@@ -54,11 +54,26 @@ class MongoDB(DataBase):
         collections_items: List[Movie] = []
         for item in resultat:
             movie_item = Movie(
-                title=item["title"], actors=item['autor'], year=item["year"], image=item["image"],
+                title=item["title"], actors=item['autor'], image=item["image"],
                 description=item['desciption'], writers=item["writers"],
                 average_grade=item['greade'], number_of_ratings=item['how_grade'],
-                time=item["time"],
+
                 type="Movie"
             )
             collections_items.append(movie_item)
         return collections_items
+
+if __name__ == '__main__':
+    db = MongoDB(host="localhost", port=27017)
+    db.connect_db()
+    text = """
+        Harry jest jedyną osobą, której udaje się przeżyć spotkanie ze złym czarnoksiężnikiem - Lordem Voldemortem. W zdarzeniu jednak giną jego rodzice. Osierocony trafia pod opiekę ciotki Petunii i wuja Vernona.
+    """
+    print(len(text))
+    # x = db.delet_item(title="HARRY POTTER I KAMIEŃ FILOZOFICZNY")
+    # # print(x)
+    # l = db.find_item()
+    # for item in l:
+    #     print(item.title)
+    #     # print(item.description)
+    #     # print(len(item.description))

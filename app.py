@@ -1,5 +1,6 @@
-from flask import render_template, Flask
+from flask import render_template, Flask, request
 from Database.mongo import MongoDB
+from Helpers.Movie import Movie
 from forms import AddItem
 import os
 
@@ -26,7 +27,19 @@ def movie_top():
 @app.route("/add_item", methods=["GET", "POST"])
 def add_item():
     form = AddItem()
+    if request.method == "POST" and form.validate_on_submit():
+        data = form.data
+        movie = Movie(data["title"], data["image"], data["desc"],
+                      data["autor"], 1, data["greade"], actors=data["actors"]
+                      )
+
+        # print("movie")
+        # print(movie)
+        db.add_item(data= movie.data_to_json())
+        return render_template("add_item.html", form=form, data=movie.data_to_json())
     return render_template("add_item.html", form=form)
+
+
 if __name__ == '__main__':
     app.run()
 

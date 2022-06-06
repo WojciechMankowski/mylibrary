@@ -1,7 +1,25 @@
-movie top
-
-{{ movie }}
+{% extends 'base.html' %}
+{% block main %}
 
 {% for item in movie %}
-{{ item.title }}
+<div>
+    <h2>
+        {{ item.title }}
+    </h2>
+    {% if item.image%}
+    {{item.image}}
+    {%endif%}
+    <p>
+        {{ item.description[:207] }}
+    </p>
+    <p>
+
+        {{ item.actors}}</p>
+    <span>
+        {{ item.average_grade}}
+        <br />
+        <span>Liczba ocen: {{item.number_of_ratings}}</span>
+    </span>
+</div>
 {% endfor %}
+{% endblock %}

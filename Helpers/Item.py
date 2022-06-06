@@ -5,7 +5,6 @@ from dataclasses import dataclass
 class Item:
     title: str
     image: str
-    year : str
     description: str
     writers: str
     number_of_ratings: int = 0
