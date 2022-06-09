@@ -1,36 +1,49 @@
-# TODO założyć bazę danych
+import sqlite3
 from  dataclasses import dataclass
-
-
+from typing import List
+from Helpers.Movie import Movie
 
 @dataclass
-class DataBase:
-    host: str
-    port: int
+class SQLLite:
 
-    def __int__(self, ):
-        self.connect = self.connect_db()
-        self.db = ""
-
+    name_file: str
     def connect_db(self):
-        ...
-    def add_item(self, **kwargs): ...
+        self.connect = sqlite3.connect(self.name_file)
+        self.cursor = self.connect.cursor()
 
-    def find_item(self): ...
+    def CreateTable(self, name_table: str, collection_columns, type_columns):
+        query = f"CREATE TABLE {name_table}   ("
+        for index in range(0, len(collection_columns)):
 
-    def find_item_title(self, title: str): ...
+            if index != len(collection_columns) - 1:
+                query += f"{collection_columns[index]} {type_columns[index]} ,"
+            else:
+                query += f"{collection_columns[index]} {type_columns[index]} "
+
+        query += ")"
+        print(query)
+        self.cursor.execute(query)
+
+    def AddItem(self, nametable: str, *kwags):
+        query = f"INSERT INTO {nametable} VALUES  {kwags}"
+        print(query)
+        self.cursor.execute(query)
+        self.connect.commit()
 
 
+    def FindAllItem(self, nametable: str) -> List[Movie]:
+        query = f"Select * from {nametable}"
+        collection_items: List[Movie] = []
+        result = self.cursor.execute(query)
+        for item in result:
+            items = Movie(item[0], item[6], item[4], item[1], item[3], item[2], item[7])
+            collection_items.append(items)
+        return collection_items
 
-
-# if __name__ == '__main__':
-#     db = MongoDB(host="localhost", port=27017)
-#     db.connect_db()
-#     # db.add_item(title = "Men", autor = "AA", greade = 3, how_grade = 2, desciption = "",
-#     #             type = "Movie", year="2021",
-#     #             time="2 h 30 mint", image = "", writers="")
-#     # title = "Men", autor = "AA", greade = 3, how_grade = 2, desciption = "", type = "Movie"
-#     x = db.find_item_title("Men")
-#     print(x)
-#     # db.delet_item(title = "Men")
-#     # db.find_item()
+    def __del__(self):
+        self.connect.close()
+if __name__ == '__main__':
+    db = SQLLite("../kultura.db")
+    db.connect_db()
+    db.FindAllItem("Movie")
+    

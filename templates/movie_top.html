@@ -7,14 +7,21 @@
         {{ item.title }}
     </h2>
     {% if item.image%}
-    {{item.image}}
+
+    {%if item.image[0:8] == "https://" %}
+    <img src="{{item.image}}">
+    {%else%}
+    <img src="{{url_for('static', filename='IMAG/'+item.image)}}">
     {%endif%}
+    {%endif%}
+
+
     <p>
-        {{ item.description[:207] }}
+        {{ item.description }}
     </p>
     <p>
 
-        {{ item.actors}}</p>
+        Resyżer: {{ item.writers}}</p>
     <span>
         {{ item.average_grade}}
         <br />

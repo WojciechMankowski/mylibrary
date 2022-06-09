@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block main %}
 <form method="POST">
     {{ form.csrf_token }}
     {{ form.title.label }}{{ form.title}}
@@ -10,3 +12,4 @@
     {{ form.sumbit }}
     <input type="reset" value="Wyczyść">
 </form>
+{% endblock %}

@@ -7,7 +7,7 @@ class AddItem(FlaskForm):
     autor = StringField("Autor: ", validators=[DataRequired()])
     desc = TextAreaField("Opis: ", validators=[DataRequired(), Length(min=10, max=200)])
     image = FileField("Plakatokładka: ", validators=[validators.Optional()])
-    actors =StringField("Actorzy/ Gwiazdy w filmie:  ", validators=[validators.Optional()])
+    actors =StringField("Actorzy/Gwiazdy w filmie:  ", validators=[validators.Optional()])
     greade = IntegerField("Twoja ocena: ", validators=[DataRequired()])
     type = SelectField("Wybierz rodzaj: ", choices=["Książka", "Film"], validators=[DataRequired()])
     sumbit = SubmitField("Dodaj")
