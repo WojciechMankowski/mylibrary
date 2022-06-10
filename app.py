@@ -1,6 +1,4 @@
 from flask import render_template, Flask, request
-
-from Helpers.Movie import Movie
 from forms import AddItem
 import os
 from Database.database import SQLLite
@@ -8,19 +6,16 @@ app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
-# db = SQLLite("kultura.db")
-# db.connect_db()
-
 @app.route('/')
-def hello_world():
+def index():
     return render_template("index.html")
 
 @app.route("/book")
-def book_top():
+def book():
     return render_template("book_top.html")
 
 @app.route("/movie")
-def movie_top():
+def movie():
     db = SQLLite("kultura.db")
     db.connect_db()
     movie = db.FindAllItem("Movie")
