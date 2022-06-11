@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col">
             <h2>
-                {{ item.title }}
+                {{ item.title.title() }}
             </h2>
         </div>
     </div>
@@ -41,6 +41,15 @@
                 <br />
                 <span>Liczba ocen: {{item.number_of_ratings}}</span>
             </span>
+            <div>
+                <button type="button">
+                    Zgłoś film
+                </button>
+                <button type="button">
+                    <a href="{{url_for('Rate', 
+                    title=item.title.lower().replace(' ', '_'))}}">Dodaj ocenę</a>
+                </button>
+            </div>
         </div>
     </div>
 </div>

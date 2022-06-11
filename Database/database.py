@@ -21,12 +21,10 @@ class SQLLite:
                 query += f"{collection_columns[index]} {type_columns[index]} "
 
         query += ")"
-        print(query)
         self.cursor.execute(query)
 
     def AddItem(self, nametable: str, *kwags):
         query = f"INSERT INTO {nametable} VALUES  {kwags}"
-        print(query)
         self.cursor.execute(query)
         self.connect.commit()
 
@@ -40,6 +38,16 @@ class SQLLite:
             collection_items.append(items)
         return collection_items
 
+    def FindHow_Grade(self, nametable: str, title: str) -> int:
+        query = f"SELECT how_grade, Greade FROM {nametable} WHERE title = '{title}'"
+        result = self.cursor.execute(query)
+        item = result.fetchone()
+        return item
+    def UpdateItem(self, nametable: str, rate: float, title: str, how_grade):
+
+        query = f"UPDATE {nametable} SET Greade = {rate}, how_grade={how_grade+1} WHERE title = '{title}'"
+        self.cursor.execute(query)
+        self.connect.commit()
     def __del__(self):
         self.connect.close()
 if __name__ == '__main__':

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block main %}
+<h3>
+    Oceń film: {{ title.replace("_", " ").title() }}
+</h3>
+
+<form method="POST">
+    {{ form.csrf_token }}
+    {{ form.rate.label }}{{ form.rate }}
+    {%if form.rate_validate()%}
+    <span>
+        Ocena musi być z zakresu 1-10
+    </span>
+    {%endif%}
+    {{ form.sumbit }}
+    <input type="reset" value="Wyczyść">
+</form>
+{% endblock %}
