@@ -1,6 +1,8 @@
 import sqlite3
 from  dataclasses import dataclass
 from typing import List
+
+from Helpers.Book import Book
 from Helpers.Movie import Movie
 
 @dataclass
@@ -29,13 +31,18 @@ class SQLLite:
         self.cursor.execute(query)
         self.connect.commit()
 
-    def FindAllItem(self, nametable: str) -> List[Movie]:
+    def FindAllItem(self, nametable: str, type: str ) -> List[Movie | Book ]:
         query = f"Select * from {nametable}"
-        collection_items: List[Movie] = []
+        collection_items: List[Movie | Book] = []
         result = self.cursor.execute(query)
-        for item in result:
-            items = Movie(item[0], item[6], item[4], item[1], item[3], item[2], item[7])
-            collection_items.append(items)
+        if type == "Movie":
+            for item in result:
+                items = Movie(item[0], item[6], item[4], item[1], item[3], item[2], item[7])
+                collection_items.append(items)
+        elif type == "Book":
+            for item in result:
+                items = Movie(item[0], item[6], item[4], item[1], item[3], item[2])
+                collection_items.append(items)
         return collection_items
 
     def FindHow_Grade(self, nametable: str, title: str):

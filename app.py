@@ -18,7 +18,7 @@ def index():
 def book():
     db = SQLLite("kultura.db")
     db.connect_db()
-    book = db.FindAllItem("Book")
+    book = db.FindAllItem("Book", "Book")
     return render_template("book_top.html", book=book)
 
 
@@ -26,7 +26,7 @@ def book():
 def movie():
     db = SQLLite("kultura.db")
     db.connect_db()
-    movie = db.FindAllItem("Movie")
+    movie = db.FindAllItem("Movie", "Movie")
     return render_template("movie_top.html", movie=movie)
 
 
