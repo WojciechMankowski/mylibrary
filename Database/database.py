@@ -7,6 +7,7 @@ from Helpers.Movie import Movie
 class SQLLite:
 
     name_file: str
+
     def connect_db(self):
         self.connect = sqlite3.connect(self.name_file)
         self.cursor = self.connect.cursor()
@@ -28,7 +29,6 @@ class SQLLite:
         self.cursor.execute(query)
         self.connect.commit()
 
-
     def FindAllItem(self, nametable: str) -> List[Movie]:
         query = f"Select * from {nametable}"
         collection_items: List[Movie] = []
@@ -38,20 +38,42 @@ class SQLLite:
             collection_items.append(items)
         return collection_items
 
-    def FindHow_Grade(self, nametable: str, title: str) -> int:
+    def FindHow_Grade(self, nametable: str, title: str):
         query = f"SELECT how_grade, Greade FROM {nametable} WHERE title = '{title}'"
-        result = self.cursor.execute(query)
-        item = result.fetchone()
+        self.cursor.execute(query)
+        item = self.cursor.fetchall()
         return item
+
     def UpdateItem(self, nametable: str, rate: float, title: str, how_grade):
 
         query = f"UPDATE {nametable} SET Greade = {rate}, how_grade={how_grade+1} WHERE title = '{title}'"
         self.cursor.execute(query)
         self.connect.commit()
+
+    def FindAllItemSort(self, nametable: str):
+        query = f"SELECT * FROM {nametable}  order by Greade DESC"
+        self.cursor.execute(query)
+        result = self.cursor.fetchall()
+        collection_items: List[Movie] = []
+        for item in result:
+            items = Movie(item[0], item[6], item[4], item[1], item[3], item[2], item[7])
+            collection_items.append(items)
+        return collection_items
+
     def __del__(self):
         self.connect.close()
+
+
 if __name__ == '__main__':
     db = SQLLite("../kultura.db")
     db.connect_db()
-    db.FindAllItem("Movie")
-    
+    db.CreateTable("Book",
+                   collection_columns= [ "Title", "Autor","Greade", "how_grade", "desciption", "type", "image"],
+                   type_columns = ["text", "text", "REAL", "INTEGER", "text", "text", "text"]
+                   )
+
+    # db.CreateTable("Movie", [
+    #     "Title", "Autor", , , "actors"],
+    #                ["text", "text", "REAL", "INTEGER", "text", "text", "text", "text"]
+    #                )
+#

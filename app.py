@@ -1,12 +1,13 @@
+import os
 from flask import render_template, Flask, request
 from forms import AddItem, RateItem
-import os
 from Database.database import SQLLite
 from Helpers.average_grade import CalculateTheAverage
+from TopItem import top_page
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-
+app.register_blueprint(top_page, url_prefix="/top")
 
 @app.route('/')
 def index():
@@ -45,7 +46,9 @@ def add_item():
 @app.route("/rate/<title>", methods=["GET", "POST"])
 def Rate(title: str):
     form = RateItem()
-    if request.method == "POST":
+    # print(request.method == "POST" and form.RateValidate())
+    print(form.RateValidate())
+    if request.method == "POST" and form.RateValidate():
         data = form.data
         title = title.replace("_", " ").title()
         db = SQLLite("kultura.db")
@@ -53,14 +56,8 @@ def Rate(title: str):
         dane = db.FindHow_Grade("Movie", title)
         av = CalculateTheAverage(data["rate"], dane[1], dane[0])
         db.UpdateItem("Movie", av, title, dane[0])
-        # db.RateItem(title, data["rate"])
     return render_template("rate.html", title=title, form=form)
 
 
 if __name__ == '__main__':
     app.run()
-
-
-# TODO  STWORZYĆ OBRAZ DOCERA
-#  TODO  stworzć formularz dodawania nowych rzeczy
-#  TODO  stowrzyć formulacz do wystawiania ocen

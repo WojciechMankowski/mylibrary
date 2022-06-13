@@ -4,15 +4,19 @@
     Oceń film: {{ title.replace("_", " ").title() }}
 </h3>
 
-<form method="POST">
+<form method="POST" class="form-group">
     {{ form.csrf_token }}
-    {{ form.rate.label }}{{ form.rate }}
-    {%if form.rate_validate()%}
-    <span>
-        Ocena musi być z zakresu 1-10
-    </span>
-    {%endif%}
-    {{ form.sumbit }}
-    <input type="reset" value="Wyczyść">
+    {{ form.rate.label(class="form-label") }}{{ form.rate(class="form-control" ) }}
+    <br />
+    <div class="alert alert-danger" role="alert">
+        {%if form.rate_validate()%}
+
+        <span>
+            Ocena musi być z zakresu 1-10
+        </span>
+        {%endif%}
+    </div>
+    {{ form.sumbit(class="btn btn-warning") }}
+    <input type="reset" value="Wyczyść" class="btn btn-danger">
 </form>
 {% endblock %}
