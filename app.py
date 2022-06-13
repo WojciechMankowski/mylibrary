@@ -16,7 +16,10 @@ def index():
 
 @app.route("/book")
 def book():
-    return render_template("book_top.html")
+    db = SQLLite("kultura.db")
+    db.connect_db()
+    book = db.FindAllItem("Book")
+    return render_template("book_top.html", book=book)
 
 
 @app.route("/movie")
@@ -30,23 +33,26 @@ def movie():
 @app.route("/add_item", methods=["GET", "POST"])
 def add_item():
     form = AddItem()
-    if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST":
         data = form.data
         db = SQLLite("kultura.db")
         db.connect_db()
-        db.AddItem("Movie",
+        if data["type"] == "Films":
+            db.AddItem("Movie",
                    data["title"], data["autor"], data["greade"], 1, data["desc"],
                    data["type"], data["image"], data["actors"]
-
                    )
-        return render_template("add_item.html", form=form, )
+        elif data["type"] == "Książka":
+            db.AddItem("Book",
+                       data["title"], data["autor"], data["greade"], 1, data["desc"],
+                       data["type"], data["image"])
+        return render_template("add_item.html", form=form)
     return render_template("add_item.html", form=form)
 
 
 @app.route("/rate/<title>", methods=["GET", "POST"])
 def Rate(title: str):
     form = RateItem()
-    # print(request.method == "POST" and form.RateValidate())
     print(form.RateValidate())
     if request.method == "POST" and form.RateValidate():
         data = form.data

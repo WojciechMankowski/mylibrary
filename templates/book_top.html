@@ -1,5 +1,69 @@
 {% extends 'base.html' %}
 {% block main %}
-book top
-{% endblock %}
+<div class="row">
+    <div class="col">
+        <a href="/movie">
+            <button class="btn btn-success" disabled>Książki
+            </button>
+        </a>
 
+    </div>
+    <div class="col">
+        <a href="/top/movie">
+            <button class="btn btn-primary">
+                Top książek
+            </button>
+        </a>
+
+    </div>
+</div>
+{% for item in book %}
+<div>
+
+    <div class="row">
+        <div class="col">
+            <h2>
+                {{ item.title.title() }}
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if item.image%}
+
+            {%if item.image[0:8] == "https://" %}
+            <img src="{{item.image}}">
+            {%else%}
+            <img src="{{url_for('static', filename='IMAG/'+item.image)}}">
+            {%endif%}
+            {%endif%}
+        </div>
+        <div class="col">
+
+            <p>
+                {{ item.description }}
+            </p>
+            <p>
+
+                Resyżer: {{ item.writers}}</p>
+            <span>
+                <h3>Ocena użytkowników: {{ item.average_grade}}</h3>
+
+                <br />
+                <span>Liczba ocen: {{item.number_of_ratings}}</span>
+            </span>
+            <div>
+                <button type="button" class="btn btn-info">
+                    Zgłoś książekę
+                </button>
+                <button type="button" class="btn btn-info">
+                    <a href="{{url_for('Rate', 
+                    title=item.title.lower().replace(' ', '_'))}}">Dodaj ocenę</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
+
+{% endblock %}
