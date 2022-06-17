@@ -18,9 +18,9 @@
     </div>
 </div>
 {% for item in book %}
-<div>
+<div class="movie">
 
-    <div class="row">
+    <div class="row title ">
         <div class="col">
             <h2>
                 {{ item.title.title() }}
@@ -32,9 +32,9 @@
             {% if item.image%}
 
             {%if item.image[0:8] == "https://" %}
-            <img src="{{item.image}}">
+            <img src="{{item.image}}" class="rounded mx-auto d-block">
             {%else%}
-            <img src="{{url_for('static', filename='IMAG/'+item.image)}}">
+            <img src="{{url_for('static', filename='IMAG/'+item.image)}}" class="rounded mx-auto d-block">
             {%endif%}
             {%endif%}
         </div>
@@ -45,22 +45,16 @@
             </p>
             <p>
 
-                Resyżer: {{ item.writers}}</p>
+                <strong> Resyżer: </strong>{{ item.writers}}
+            </p>
             <span>
                 <h3>Ocena użytkowników: {{ item.average_grade}}</h3>
-
-                <br />
-                <span>Liczba ocen: {{item.number_of_ratings}}</span>
+                <span><strong>Liczba ocen: {{item.number_of_ratings}} </strong></span>
             </span>
-            <div>
-                <button type="button" class="btn btn-info">
-                    Zgłoś książekę
-                </button>
-                <button type="button" class="btn btn-info">
-                    <a href="{{url_for('Rate', 
-                    title=item.title.lower().replace(' ', '_'))}}">Dodaj ocenę</a>
-                </button>
-            </div>
+            <br>
+
+            {% include 'button.html' %}
+
         </div>
     </div>
 </div>

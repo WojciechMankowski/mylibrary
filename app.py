@@ -4,6 +4,14 @@ from forms import AddItem, RateItem
 from Database.database import SQLLite
 from Helpers.average_grade import CalculateTheAverage
 from TopItem import top_page
+from firebase_admin import credentials, firestore, initialize_app
+
+cred = credentials.Certificate('key.json')
+default_app = initialize_app(cred)
+db = firestore.client()
+todo_ref = db.collection('todos')
+
+
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY

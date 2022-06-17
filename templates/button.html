@@ -1,0 +1,10 @@
+<div class="button">
+    <button type="button" class="btn button_rate">
+        Zgłoś film
+    </button>
+    <button type="button" class="btn button_rate">
+        <a href="{{url_for('Rate', 
+    title=item.title.lower().replace(' ', '_'))}}" class="btn-link link">Dodaj ocenę</a>
+
+    </button>
+</div>

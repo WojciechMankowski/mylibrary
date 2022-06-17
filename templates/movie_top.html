@@ -2,25 +2,29 @@
 {% block main %}
 <div class="row">
     <div class="col">
-        <a href="/movie">
-            <button class="btn btn-success" disabled>Filmy
-            </button>
-        </a>
+
+        <button class="btn buttons" disabled>
+            <a href="/movie" class="links">
+                Filmy </a>
+        </button>
+
 
     </div>
     <div class="col">
-        <a href="/top/movie">
-            <button class="btn btn-primary">
-                Top filmów
-            </button>
-        </a>
+
+        <button class="btn buttons">
+            <a href="/top/movie" class="links">
+                Top filmów</a>
+        </button>
+
 
     </div>
 </div>
-{% for item in movie %}
-<div>
 
-    <div class="row">
+{% for item in movie %}
+<div class="movie">
+
+    <div class="row title ">
         <div class="col">
             <h2>
                 {{ item.title.title() }}
@@ -32,38 +36,39 @@
             {% if item.image%}
 
             {%if item.image[0:8] == "https://" %}
-            <img src="{{item.image}}">
+            <img src="{{item.image}}" class="rounded mx-auto d-block">
             {%else%}
-            <img src="{{url_for('static', filename='IMAG/'+item.image)}}">
+            <img src="{{url_for('static', filename='IMAG/'+item.image)}}" class="rounded mx-auto d-block">
             {%endif%}
             {%endif%}
         </div>
-        <div class="col">
+        <div class="col  ">
 
-            <p>
+            <p class="text-lg-left">
                 {{ item.description }}
             </p>
             <p>
 
-                Resyżer: {{ item.writers}}</p>
+                <strong>Resyżer:</strong>
+                {{ item.writers}}
+            </p>
             <span>
                 <h3>Ocena użytkowników: {{ item.average_grade}}</h3>
-
                 <br />
-                <span>Liczba ocen: {{item.number_of_ratings}}</span>
+                <span>
+                    <strong> Liczba ocen: {{item.number_of_ratings}}</strong>
+
+                </span><br />
             </span>
             <div>
-                <button type="button" class="btn btn-info">
-                    Zgłoś film
-                </button>
-                <button type="button" class="btn btn-info">
-                    <a href="{{url_for('Rate', 
-                    title=item.title.lower().replace(' ', '_'))}}">Dodaj ocenę</a>
-                </button>
+                {% include 'button.html' %}
             </div>
         </div>
     </div>
+
 </div>
+<br />
+<br />
 {%endfor%}
 
 {% endblock %}

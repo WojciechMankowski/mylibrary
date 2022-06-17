@@ -1,0 +1,60 @@
+.link {
+  text-decoration: none;
+  color: black;
+}
+$border_color: #55d8f2;
+$color_buddon: #099fbd;
+$border_button: #276470;
+$buuton_hover: #55d8f2;
+.movie {
+  border: 2px solid $border_color;
+  padding-bottom: 15px;
+  margin-top: 20px;
+  padding-right: 20px;
+}
+.movie p {
+  text-align: justify;
+}
+.title {
+  text-align: center;
+  padding-bottom: 20px;
+}
+.button {
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+.button button {
+  background-color: $color_buddon;
+  border-color: $border_color;
+}
+
+.button_rate:hover {
+  background-color: $buuton_hover;
+  border-color: $border_color;
+}
+
+.button_rate a {
+  text-decoration: none;
+  color: black;
+}
+.links {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+.links:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.buttons {
+  background-color: $buuton_hover;
+}
+.buttons:hover{
+  background-color: $buuton_hover;
+}
+.buttons:disabled {
+  background-color: $border_button;
+  color: white;
+}
